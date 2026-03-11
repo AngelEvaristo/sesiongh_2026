@@ -6,6 +6,8 @@ on:
       - main
       - develop
       - release
+    paths:
+      - 'MyMinimalApi/**'      
   workflow_dispatch: {}      
 
 # on:
