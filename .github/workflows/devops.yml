@@ -8,7 +8,15 @@ name: Firt workflow
 #       - release
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Valor env'
+        required: false            
+      dotnet-version-input:
+        description: 'Version de .net'
+        required: true
+        default: '8.0.x'
 
 jobs:
   build:
@@ -19,7 +27,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: ${{ github.event.inputs['dotnet-version-input'] }}
 
       - name: Ls
         run: ls
