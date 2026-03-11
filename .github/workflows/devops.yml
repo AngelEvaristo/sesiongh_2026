@@ -1,0 +1,16 @@
+name: Firt workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: build project
+        run: echo "compilando proyecto."
