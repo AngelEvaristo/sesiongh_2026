@@ -1,11 +1,14 @@
 name: Firt workflow
 
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
+#       - release
+
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - release
+  workflow_dipatch: {}
 
 jobs:
   build:
