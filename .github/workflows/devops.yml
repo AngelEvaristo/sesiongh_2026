@@ -14,8 +14,18 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
 
-      - name: build project
-        run: echo "compilando proyecto."
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Ls
+        run: ls
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: build
+        run: dotnet build --no-restore --configuration Release
 
   test:
     runs-on: windows-latest
