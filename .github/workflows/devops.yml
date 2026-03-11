@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - develop
+      - release
 
 jobs:
   build:
@@ -14,8 +16,10 @@ jobs:
 
       - name: build project
         run: echo "compilando proyecto."
+
   test:
     runs-on: windows-latest
+    needs: build
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
