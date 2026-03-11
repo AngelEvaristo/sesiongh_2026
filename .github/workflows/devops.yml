@@ -14,3 +14,11 @@ jobs:
 
       - name: build project
         run: echo "compilando proyecto."
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: test project
+        run: echo "test"        
