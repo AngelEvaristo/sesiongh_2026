@@ -41,7 +41,7 @@ jobs:
     needs: extract-version
     steps:
       - name: Print version
-        run: echo "Version es: ${{ needs.extract-version.outputs.app_version }}"
+        run: echo "Version es ${{ needs.extract-version.outputs.app_version }}"
 
       - name: checkout repo
         uses: actions/checkout@v4
