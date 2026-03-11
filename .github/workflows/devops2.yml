@@ -1,0 +1,41 @@
+name: Second workflow
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - release
+
+# on:
+#   workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Ls
+        run: ls
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: build
+        run: dotnet build --no-restore --configuration Release
+
+  test:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: test project
+        run: echo "test"        
