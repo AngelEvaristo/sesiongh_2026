@@ -1,0 +1,70 @@
+name: Firt workflow
+
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
+#       - release
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Valor env'
+        required: false            
+      dotnet-version-input:
+        description: 'Version de .net'
+        required: true
+        default: '8.0.x'
+
+jobs:
+
+  extract-version:
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Ls
+        run: ls
+      - name: Get version from changelog
+        id: get_version
+        run: |
+          VERSION=$(grep -m1 -oP '(?<=## \[)[0-9]+\.[0-9]+\.[0-9]+' CHANGELOG.md)
+          echo "Version found: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    needs: extract-version
+    steps:
+      - name: Print version
+        run: echo "Version es ${{ needs.extract-version.outputs.app_version }}"
+
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ github.event.inputs['dotnet-version-input'] }}
+
+      - name: Ls
+        run: ls
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: build
+        run: dotnet build --no-restore --configuration Release
+
+  test:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: test project
+        run: echo "test"        
