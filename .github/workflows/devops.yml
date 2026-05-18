@@ -1,12 +1,5 @@
 name: Firt workflow
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - develop
-#       - release
-
 on:
   workflow_dispatch:
     inputs:
